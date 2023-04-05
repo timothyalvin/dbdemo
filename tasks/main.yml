@@ -1,0 +1,30 @@
+---
+# tasks file for dbrole
+
+- name: ensure installation of podman
+  ansible.builtin.dnf:
+    name: "{{ dbrole_package }}"
+    state: present
+
+- name: log in to the repo
+  containers.podman.podman_login:
+    registry: utility.lab.example.com
+    username: "{{ dbrole_username }}"
+    password: "{{ dbrole_password }}"
+
+- name: pull the image
+  containers.podman.podman_image:
+    name: utility.lab.example.com/mariadb-105
+
+- name: run the db container
+  containers.podman.podman_container:
+    name: dbcontainer
+    image: utility.lab.example.com/mariadb-105
+    env:
+      MYSQL_USER: "{{ dbrole_dbuser }}"
+      MYSQL_PASSWORD: "{{ dbrole_dbpass }}"
+      MYSQL_DATABASE: "{{ dbrole_dbname }}"
+    ports:
+      - '3306:3306'
+
+

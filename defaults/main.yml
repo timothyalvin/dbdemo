@@ -1,0 +1,7 @@
+---
+# defaults file for dbrole
+dbrole_username: admin
+dbrole_password: redhat
+dbrole_dbuser: tim
+dbrole_dbpass: redhat
+dbrole_dbname: items
